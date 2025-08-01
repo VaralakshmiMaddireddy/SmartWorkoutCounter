@@ -40,25 +40,24 @@ cd Smart-Workout-Counter
 
 ### 2. Create a Virtual Environment
 Create a virtual environment using Python:
-'''bash
+
 python -m venv venv
 
 Activate the environment:
 
-On Windows:
+**On Windows**:
 venv\Scripts\activate
 
-On macOS/Linux:
+**On macOS/Linux**:
 source venv/bin/activate
 
-###3. Install Dependencies
+### 3. Install Dependencies
 pip install -r requirements.txt
 
 ### 4. Run the Application
 
 After installing all dependencies and activating the virtual environment, start the Flask server by running:
 
-```bash
 python exercise_server.py
 
 By default, the server will run on:
