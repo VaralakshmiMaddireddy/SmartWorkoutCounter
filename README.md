@@ -38,7 +38,7 @@ This is a Flask-based application that uses MediaPipe, OpenCV, and SQLAlchemy to
 git clone https://github.com/VaralakshmiMaddireddy/Smart-Workout-Counter.git
 cd Smart-Workout-Counter
 
-**### 2. Create a Virtual Environment**
+### 2. Create a Virtual Environment
 Create a virtual environment using Python:
 '''bash
 python -m venv venv
@@ -50,11 +50,11 @@ venv\Scripts\activate
 
 On macOS/Linux:
 source venv/bin/activate
-**
-###3. Install Dependencies**
+
+###3. Install Dependencies
 pip install -r requirements.txt
 
-**### 4. Run the Application**
+### 4. Run the Application
 
 After installing all dependencies and activating the virtual environment, start the Flask server by running:
 
