@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="/static/app.js" defer></script>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+{% extends "dashboard_base.html" %}
+
+{% block content %}
+<div class="max-w-4xl mx-auto p-6">
+    <h2 class="text-2xl font-bold mb-4">Welcome, <span class="text-blue-600">{{ name }}</span></h2>
+
+    <!-- FITNESS LEVEL SELECTION -->
+    <div id="fitness-history" class="bg-white rounded-lg shadow-md p-6 mb-6">
+        <h3 class="text-xl font-semibold mb-3">🏃‍♂️ Select Your Fitness Level</h3>
+        <div class="flex flex-wrap items-center space-x-4 mb-4">
+            <select id="fitness-level" class="border border-gray-300 rounded px-3 py-2">
+                <option value="">Select your level</option>
+                <option value="beginner">Beginner</option>
+                <option value="intermediate">Intermediate</option>
+                <option value="advanced">Advanced</option>
+            </select>
+            <button id="fetch-fitness" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition">
+                Get Fitness Level
+            </button>
+        </div>
+
+        <div id="fitness-result" class="hidden">
+            <p class="text-lg">Level: <span id="fitness-level-output" class="font-semibold text-blue-500"></span></p>
+            <p class="text-lg">Recommended Biceps Range: <span id="biceps-range" class="font-semibold text-blue-500"></span></p>
+        </div>
+
+        <button id="start-button" class="hidden mt-4 bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 transition">
+            ▶️ Start Exercise
+        </button>
+    </div>
+
+    <!-- EXERCISE INTERFACE -->
+    <div id="exercise-interface" class="hidden bg-white rounded-lg shadow-md p-6 mb-6">
+        <h3 class="text-xl font-bold mb-4">💥 Live Exercise</h3>
+        <p id="total-count" class="text-lg mb-2">Total Reps: 0</p>
+        <p id="current-stage" class="text-lg mb-4">Current Stage: N/A</p>
+        <button id="stop-button" class="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 transition">
+            ⛔ Stop Exercise
+        </button>
+    </div>
+
+    <!-- GRAPH CONTAINER -->
+   <!-- GRAPH CONTAINER -->
+<div id="exercise-graph-container" class="hidden bg-white rounded-lg shadow-md p-6 w-full max-w-[700px] h-[300px] mx-auto">
+    <h3 class="text-xl font-semibold mb-4">📊 Workout Progress</h3>
+
+    <button id="refresh-chart-button" class="mb-4 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition">
+        🔄 Refresh Weekly Chart
+    </button>
+
+    <canvas id="workoutGraph" class="w-full h-full"></canvas>
+</div>
+
+
+</div>
+
+<script src="{{ url_for('static', filename='app.js') }}"></script>
+{% endblock %}
+</html>
