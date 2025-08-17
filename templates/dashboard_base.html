@@ -6,33 +6,34 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="{{ url_for('static', filename='app.js') }}" defer></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/Style.css') }}">
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 </head>
 <body class="bg-gray-100 min-h-screen font-sans leading-normal tracking-normal">
 
     <!-- TOP NAVIGATION BAR -->
-    <nav class="bg-blue-600 text-white shadow-md">
+    <nav class="bg-blue-600 text-white shadow-md w-full fixed top-0 left-0 z-50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-16">
                 <div class="flex items-center space-x-6">
                     <span class="font-bold text-xl">🏋️‍♂️ Fitness Tracker</span>
-                    <a href="#" class="hover:underline">Home</a>
-                    <a href="#" class="hover:underline">My Profile</a>
-                    <a href="#" id="nav-my-workouts" class="hover:underline">My Workouts</a>
-
-                    <a href="#" class="hover:underline">Settings</a>
+                    <a href="#" class="hover:underline text-white">Home</a>
+                    <a href="#" class="hover:underline text-white">My Profile</a>
+                    <a href="#" id="nav-my-workouts" class="hover:underline text-white">My Workouts</a>
+                    <a href="#" class="hover:underline text-white">Settings</a>
                 </div>
                 <div>
-                    <a href="{{ url_for('logout') }}" class="hover:underline">Logout</a>
+                    <a href="{{ url_for('logout') }}" class="hover:underline text-white">Logout</a>
                 </div>
             </div>
         </div>
     </nav>
 
     <!-- MAIN CONTENT AREA -->
-    <main class="py-6">
-        {% block content %}
-        {% endblock %}
+    <main class="pt-20 pb-10">
+        <div class="max-w-6xl mx-auto px-4 flex flex-col items-center justify-start text-center">
+            {% block content %}{% endblock %}
+        </div>
     </main>
 
 </body>

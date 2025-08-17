@@ -1,152 +1,23 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Smart Workout | Auth</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <style>
-        /* Page background and centering */
-        body {
-            margin: 0;
-            font-family: Arial, sans-serif;
-            background-color: #e9ecef;
-        }
+{% extends "auth_base.html" %}
 
-        .login-wrapper {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-        }
+{% block content %}
+<div class="login-wrapper">
+    <div class="login-box">
+        <h1>Welcome to Smart Workout Counter</h1>
+        <form method="POST" action="{{ url_for('login') }}">
+            <label for="username">Username</label>
+            <input type="text" id="username" name="username" placeholder="Enter your username" required>
 
-        .login-box {
-            background-color: #fff;
-            padding: 30px 40px;
-            border-radius: 10px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-            width: 100%;
-            max-width: 400px;
-        }
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" placeholder="Enter your password" required>
 
-        .login-box h1 {
-            margin-bottom: 25px;
-            font-size: 24px;
-            color: #222;
-            text-align: center;
-        }
+            <button type="submit">Sign In</button>
+        </form>
 
-        label {
-            display: block;
-            margin-bottom: 5px;
-            font-weight: bold;
-            color: #333;
-        }
-
-        input[type="text"],
-        input[type="password"] {
-            width: 100%;
-            padding: 10px 12px;
-            margin-bottom: 20px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            background-color: #f0f5ff;
-        }
-
-        button[type="submit"] {
-            width: 100%;
-            padding: 10px;
-            background-color: #28a745;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            font-weight: bold;
-            cursor: pointer;
-            font-size: 16px;
-        }
-
-        button[type="submit"]:hover {
-            background-color: #218838;
-        }
-
-        .link-text {
-            margin-top: 15px;
-            text-align: center;
-            font-size: 14px;
-        }
-
-        .link-text a {
-            color: #6f42c1;
-            text-decoration: none;
-        }
-
-        .link-text a:hover {
-            text-decoration: underline;
-        }
-
-        .social-buttons {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 20px;
-        }
-
-        .social-buttons a button {
-            flex: 1;
-            margin: 0 5px;
-            background-color: #007bff;
-            color: white;
-            border: none;
-            padding: 10px;
-            border-radius: 5px;
-            font-weight: bold;
-            cursor: pointer;
-            font-size: 14px;
-        }
-
-        .social-buttons a button:hover {
-            background-color: #0056b3;
-        }
-
-        @media (max-width: 500px) {
-            .login-box {
-                padding: 20px;
-            }
-
-            .social-buttons {
-                flex-direction: column;
-            }
-
-            .social-buttons a button {
-                margin: 5px 0;
-            }
-        }
-    </style>
-</head>
-<body>
-    <div class="login-wrapper">
-        <div class="login-box">
-            <h1>Welcome to Smart Workout Counter</h1>
-            <form method="POST" action="/login">
-                <label for="username">Username</label>
-                <input type="text" id="username" name="username" placeholder="Enter your username" required>
-
-                <label for="password">Password</label>
-                <input type="password" id="password" name="password" placeholder="Enter your password" required>
-
-                <button type="submit">Sign In</button>
-            </form>
-
-            <div class="link-text">
-                Don't have an account? <a href="/signup">Sign Up here</a>
-            </div>
-
-            <div class="link-text" style="margin-top: 15px;">Or sign in with:</div>
-            <div class="social-buttons">
-                <a href="{{ url_for('login_google') }}">
-                    <button type="button">Sign in with Google</button>
-                </a>
-                
-            </div>
+        <div class="link-text">
+            Don't have an account? <a href="{{ url_for('signup') }}">Sign Up here</a>
         </div>
+
     </div>
-</body>
-</html>
+</div>
+{% endblock %}

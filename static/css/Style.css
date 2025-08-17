@@ -68,10 +68,10 @@ label {
     margin-top: 10px;
 }
 #exerciseChart {
-    width: 50%; /* Fill the container width */
-    height: 50%; /* Fill the container height */
-    max-width: 80px; /* Optional: set a max width */
-    max-height: 50px; /* Optional: set a max height */
+    width: 100%;       /* Fill the container width */
+    height: 500px;     /* Set a fixed height for the chart */
+    max-width: 100%;   /* Do not exceed container width */
+    max-height: none;  /* Let height be as defined */
 }
 
 
@@ -155,12 +155,26 @@ a:hover {
     text-decoration: underline;
 }
 #exercise-graph-container {
-    max-width: 600px;
-    height: 300px;
-    margin: auto;
+    width: 800px;            /* Card width */
+    height: 500px;           /* Card height */
+    margin: 30px auto;
+    padding: 20px;
+    background-color: #ffffff; /* White card */
+    border-radius: 20px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+    text-align: center;
+    
+    flex-direction: column;
+    align-items: center;
 }
 
 #workoutGraph {
-    max-width: 80%;
-    max-height: 80%;
+    width: 100%;             /* Fill card */
+    height: 100%;            /* Fill card */
+    margin: 0;               /* Remove spacing */
+    padding: 0;              /* Remove padding */
+    border-radius: 0;        /* No extra rounding */
+    box-shadow: none;        /* No shadow */
+    background: transparent; /* Transparent */
 }
+

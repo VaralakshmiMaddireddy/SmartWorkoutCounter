@@ -3,20 +3,77 @@
 <head>
     <meta charset="UTF-8">
     <title>Smart Workout | Auth</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/Style.css') }}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/auth.css') }}">
+    <style>
+        /* Flash banner styles */
+        #top-flash-container {
+            position: fixed;
+            top: 1rem;                /* distance from top */
+            left: 0;
+            right: 0;
+            display: flex;
+            flex-direction: column;   /* stack messages vertically */
+            align-items: center;      /* center horizontally */
+            gap: 0.5rem;              /* space between messages */
+            z-index: 9999;
+        }
 
+        .flash-banner {
+            width: 320px;
+            padding: 0.75rem 1.25rem;
+            border-radius: 0.75rem;
+            font-size: 15px;
+            font-weight: 500;
+            text-align: center;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.18);
+            opacity: 1;
+            transform: translateY(0);
+            transition: all 0.5s ease;
+        }
+
+        /* Categories */
+        .flash-banner.success {
+            background-color: #d1fae5; /* light green */
+            color: #065f46;            /* dark green */
+        }
+
+        .flash-banner.error {
+            background-color: #fee2e2; /* light red */
+            color: #991b1b;            /* dark red */
+        }
+    </style>
 </head>
 <body>
-    <div class="auth-container">
-        {% with messages = get_flashed_messages() %}
-        {% if messages %}
-            {% for message in messages %}
-                <p style="color: red;">{{ message }}</p>
+    <!-- Top notification banner -->
+    {% with messages = get_flashed_messages(with_categories=True) %}
+    {% if messages %}
+        <div id="top-flash-container">
+            {% for category, message in messages %}
+                <div class="flash-banner {{ category }}">
+                    {{ message }}
+                </div>
             {% endfor %}
-        {% endif %}
-        {% endwith %}
+        </div>
+    {% endif %}
+    {% endwith %}
 
+    <div class="auth-container">
         {% block content %}{% endblock %}
     </div>
+
+    <!-- Auto-hide flash messages -->
+    <script>
+    window.addEventListener('DOMContentLoaded', () => {
+        const banners = document.querySelectorAll('#top-flash-container .flash-banner');
+        banners.forEach(banner => {
+            setTimeout(() => {
+                banner.style.opacity = '0';
+                banner.style.transform = 'translateY(-50px)';
+                setTimeout(() => banner.remove(), 500); // remove from DOM after fade
+            }, 3000); // 3 seconds visible
+        });
+    });
+    </script>
 </body>
 </html>

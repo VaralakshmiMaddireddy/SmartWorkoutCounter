@@ -1,0 +1,114 @@
+body {
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f4f6f9;
+}
+
+/* Center container */
+.auth-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+/* Login box */
+.login-box {
+    background-color: #fff;
+    padding: 40px 50px;
+    border-radius: 15px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 420px;
+    text-align: center;
+}
+
+.login-box h1 {
+    margin-bottom: 25px;
+    font-size: 26px;
+    color: #111;
+    font-weight: 600;
+}
+
+/* Labels & Inputs */
+label {
+    display: block;
+    margin-bottom: 6px;
+    font-weight: 600;
+    color: #333;
+    text-align: left;
+}
+
+input[type="text"],
+input[type="password"],
+input[type="email"] {
+    width: 100%;
+    padding: 12px 14px;
+    margin-bottom: 18px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #f9fbff;
+    font-size: 15px;
+    transition: border 0.3s;
+}
+
+input:focus {
+    border-color: #2563eb;
+    outline: none;
+}
+
+/* Buttons */
+button[type="submit"],
+.social-buttons a button {
+    width: 100%;
+    padding: 12px;
+    background-color: #2563eb;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background 0.3s;
+}
+
+button[type="submit"]:hover {
+    background-color: #1e40af;
+}
+
+/* Links below form */
+.link-text {
+    margin-top: 15px;
+    font-size: 14px;
+}
+
+.link-text a {
+    color: #2563eb;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.link-text a:hover {
+    text-decoration: underline;
+}
+
+/* Social login buttons */
+.social-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+    gap: 10px;
+}
+
+.social-buttons a button {
+    flex: 1;
+    padding: 10px;
+    background-color: #007bff;
+    font-size: 14px;
+    border-radius: 6px;
+}
+
+.social-buttons a button:hover {
+    background-color: #0056b3;
+}
+
