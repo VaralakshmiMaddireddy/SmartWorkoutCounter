@@ -58,7 +58,7 @@ pip install -r requirements.txt
 
 After installing all dependencies and activating the virtual environment, start the Flask server by running:
 
-python exercise_server.py
+python app.py
 
 By default, the server will run on:
 http://127.0.0.1:5000
@@ -66,6 +66,7 @@ http://127.0.0.1:5000
 
 
 Open this link in your browser to access the Smart Workout Counter dashboard.
+
 
 
 
