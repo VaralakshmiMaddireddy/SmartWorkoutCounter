@@ -1,16 +1,14 @@
 import os
-# Suppress TensorFlow/MediaPipe logs
-os.environ["TF_CPP_MIN_LOG_LEVEL"] = "2"
-
-import logging
-logging.getLogger('mediapipe').setLevel(logging.ERROR)
-
 import io
 import json
 import base64
 import re
-import secrets
 from datetime import date, datetime, timedelta
+import logging
+
+# Suppress TensorFlow/MediaPipe logs
+os.environ["TF_CPP_MIN_LOG_LEVEL"] = "2"
+logging.getLogger('mediapipe').setLevel(logging.ERROR)
 
 import matplotlib
 matplotlib.use('Agg')
@@ -33,7 +31,10 @@ import numpy as np
 # ------------------ App setup ------------------
 app = Flask(__name__)
 app.config['SECRET_KEY'] = os.getenv('SECRET_KEY', 'your_secret_key_here')
-app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL')
+app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv(
+    'DATABASE_URL',
+    'postgresql://smart_app_db_txz0_user:Ubl0s1JJuxYovwqk6d8lbCqrjcUW1HGH@dpg-d2h379juibrs73et956g-a.oregon-postgres.render.com/smart_app_db_txz0'
+)
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)
@@ -57,6 +58,7 @@ class User(db.Model, UserMixin):
 
     def check_password(self, password):
         return check_password_hash(self.password_hash, password)
+
 
 @login_manager.user_loader
 def load_user(user_id):
@@ -90,6 +92,7 @@ def fetch_workout_data():
     sorted_counts = list(counts.values())
     return sorted_dates, sorted_counts
 
+
 # ------------------ Globals ------------------
 mp_drawing = mp.solutions.drawing_utils
 mp_pose = mp.solutions.pose
@@ -107,10 +110,12 @@ def calculate_angle(a, b, c):
     angle = np.abs(radians * 180.0 / np.pi)
     return 360 - angle if angle > 180 else angle
 
+
 # ------------------ Routes ------------------
 @app.route('/')
 def index():
     return redirect(url_for('login'))
+
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -121,10 +126,10 @@ def login():
         if user and user.check_password(password):
             login_user(user)
             return redirect(url_for('dashboard'))
-        else:
-            flash('Invalid credentials')
-            return redirect(url_for('login'))
+        flash('Invalid credentials')
+        return redirect(url_for('login'))
     return render_template('login.html')
+
 
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
@@ -150,10 +155,12 @@ def signup():
 
     return render_template('signup.html')
 
+
 @app.route('/dashboard')
 @login_required
 def dashboard():
     return render_template('dashboard.html', name=current_user.username)
+
 
 @app.route('/logout')
 @login_required
@@ -162,7 +169,8 @@ def logout():
     flash('Logged out successfully.', 'success')
     return redirect(url_for('login'))
 
-# ------------------ Process frame with blue keypoints ------------------
+
+# ------------------ Exercise frame processing ------------------
 @app.route('/process_frame', methods=['POST'])
 def process_frame():
     global counter, stage
@@ -191,7 +199,6 @@ def process_frame():
             image_rgb.flags.writeable = True
 
             if results.pose_landmarks:
-                # Draw blue keypoints and connections
                 mp_drawing.draw_landmarks(
                     frame,
                     results.pose_landmarks,
@@ -229,7 +236,6 @@ def process_frame():
                              landmarks[mp_pose.PoseLandmark.RIGHT_WRIST.value].y]
                     right_angle = calculate_angle(shoulder, elbow, wrist)
 
-                # Rep logic
                 if left_angle is not None and right_angle is not None:
                     if left_angle > 160 and right_angle > 160:
                         stage = "down"
@@ -237,22 +243,21 @@ def process_frame():
                         counter += 1
                         stage = "up"
 
-        # Encode back to base64
         _, buffer = cv2.imencode('.jpg', frame)
         frame_b64 = base64.b64encode(buffer).decode('utf-8')
 
     except Exception as e:
-        print("process_frame error:", e)
         return jsonify({'error': 'Processing error', 'detail': str(e)}), 500
 
     return jsonify({'counter': counter, 'stage': stage, 'frame': 'data:image/jpeg;base64,' + frame_b64})
 
-# ------------------ Start & Stop exercise ------------------
+
 @app.route('/start_exercise', methods=['POST'])
 def start_exercise():
     global is_exercise_active
     is_exercise_active = True
     return jsonify({'status': 'Exercise started'})
+
 
 @app.route('/stop_exercise', methods=['POST'])
 def stop_exercise():
@@ -282,7 +287,8 @@ def stop_exercise():
     counter = 0
     return jsonify({'status': 'Exercise stopped', 'graph': image_base64})
 
-# ------------------ API helpers ------------------
+
+# ------------------ API routes ------------------
 @app.route('/api/workout-data', methods=['GET'])
 def get_workout_data():
     return jsonify(workout_data)
@@ -296,11 +302,11 @@ def get_status():
     global counter, stage
     return jsonify({'counter': counter, 'stage': stage})
 
+
 # ------------------ Run server ------------------
 if __name__ == '__main__':
     with app.app_context():
         db.create_all()
-    
+
     debug_mode = os.getenv('FLASK_DEBUG', 'false').lower() == 'true'
     app.run(host='0.0.0.0', port=int(os.getenv('PORT', 5000)), debug=debug_mode)
-
